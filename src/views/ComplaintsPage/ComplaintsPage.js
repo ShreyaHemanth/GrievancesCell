@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -25,6 +25,8 @@ import {
   FormControlLabel
 } from "@material-ui/core";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
+import useForm from "hooks/useForm";
+import axio from "axios";
 
 import image from "assets/img/bg7.jpg";
 
@@ -36,11 +38,47 @@ export default function ComplaintsPage(props) {
     setCardAnimation("");
   }, 700);
   const classes = useStyles();
-  const [value, setValue] = React.useState("female");
-
+  var [form, setForm] = useState({
+    usn: "",
+    name: "",
+    sem: "",
+    branch: "",
+    phoneno: "",
+    email: "",
+    details: "",
+    gender: ""
+  });
   const handleChange = event => {
-    setValue(event.target.value);
+    event.persist();
+    setForm(form => ({
+      ...form,
+      [event.target.name]:
+        event.target.type === "checkbox"
+          ? event.target.checked
+          : event.target.value
+    }));
+
+    console.log(form);
   };
+  const handleSubmit = event => {
+    axio.put("http://localhost:8000/complaints", form).then(() =>
+      setForm({
+        usn: "",
+        name: "",
+        sem: "",
+        branch: "",
+        phoneno: "",
+        email: "",
+        details: "",
+        gender: ""
+      })
+    );
+  };
+  // const [form, handleChange, handleSubmit] = useForm();
+
+  // const handleChange = event => {
+  //   setValue(event.target.value);
+  // };
   const { ...rest } = props;
   return (
     <div>
@@ -72,15 +110,15 @@ export default function ComplaintsPage(props) {
                     <GridContainer>
                       <GridItem xs={3}>
                         <CustomInput
-                          labelText="Complaint ID..."
+                          labelText="USN"
+                          name="usn"
+                          value={form.usn}
+                          onChange={handleChange}
                           id="first"
                           formControlProps={{
                             fullWidth: true
                           }}
                           inputProps={{
-                            type: "text",
-                            readOnly: true,
-
                             endAdornment: (
                               <InputAdornment position="end">
                                 <People className={classes.inputIconsColor} />
@@ -92,6 +130,9 @@ export default function ComplaintsPage(props) {
                       <GridItem xs={3}>
                         <CustomInput
                           labelText="Name..."
+                          name="name"
+                          value={form.name}
+                          onChange={handleChange}
                           id="first"
                           formControlProps={{
                             fullWidth: true
@@ -108,7 +149,10 @@ export default function ComplaintsPage(props) {
                       </GridItem>
                       <GridItem xs={3}>
                         <CustomInput
-                          labelText="Sem..."
+                          labelText="Branch..."
+                          name="branch"
+                          value={form.branch}
+                          onChange={handleChange}
                           id="first"
                           formControlProps={{
                             fullWidth: true
@@ -125,7 +169,10 @@ export default function ComplaintsPage(props) {
                       </GridItem>
                       <GridItem xs={3}>
                         <CustomInput
-                          labelText="Branch..."
+                          labelText="Sem..."
+                          name="sem"
+                          value={form.sem}
+                          onChange={handleChange}
                           id="first"
                           formControlProps={{
                             fullWidth: true
@@ -155,8 +202,8 @@ export default function ComplaintsPage(props) {
                         <FormControl component="fieldset">
                           <RadioGroup
                             aria-label="gender"
-                            name="gender1"
-                            value={value}
+                            name="gender"
+                            value={form.gender}
                             onChange={handleChange}
                             row
                           >
@@ -181,6 +228,9 @@ export default function ComplaintsPage(props) {
                       <GridItem xs={3}>
                         <CustomInput
                           labelText="Phone NO..."
+                          name="phoneno"
+                          value={form.phoneno}
+                          onChange={handleChange}
                           id="first"
                           formControlProps={{
                             fullWidth: true
@@ -198,6 +248,9 @@ export default function ComplaintsPage(props) {
                       <GridItem xs={3}>
                         <CustomInput
                           labelText="E Mail..."
+                          name="email"
+                          value={form.email}
+                          onChange={handleChange}
                           id="first"
                           formControlProps={{
                             fullWidth: true
@@ -215,6 +268,9 @@ export default function ComplaintsPage(props) {
                     </GridContainer>
                     <CustomInput
                       labelText="Details..."
+                      name="details"
+                      value={form.details}
+                      onChange={handleChange}
                       id="first"
                       formControlProps={{
                         fullWidth: true
@@ -232,7 +288,12 @@ export default function ComplaintsPage(props) {
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button round color="primary" size="lg">
+                    <Button
+                      round
+                      color="primary"
+                      size="lg"
+                      onClick={handleSubmit}
+                    >
                       Submit
                     </Button>
                   </CardFooter>
