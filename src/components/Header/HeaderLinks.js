@@ -58,6 +58,9 @@ export default function HeaderLinks(props) {
         <Link to="/complaints-page" className={classes.navLink}>
           Complaints
         </Link>
+        <Link to="/view-complaints" className={classes.navLink}>
+          View Complaints
+        </Link>
         <Link to="/" className={classes.navLink}>
           Policy
         </Link>

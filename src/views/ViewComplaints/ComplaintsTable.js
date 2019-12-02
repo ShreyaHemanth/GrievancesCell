@@ -33,18 +33,23 @@ export default function SimpleTable() {
   const classes = useStyles();
   const [data, setData] = useState(null);
   useEffect(() => {
-    axio.get("http://localhost:8000/complaints").then(res => setData(res.data));
+    axio.get("http://localhost:8000/complaints").then(res => {
+      console.log(res.data);
+      setData(res.data)});
   });
   return (
     <Paper className={classes.root}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>NAME</TableCell>
+            <TableCell align="right">USN</TableCell>
+            <TableCell align="right">GENDER</TableCell>
+            <TableCell align="right">PHNO.</TableCell>
+            <TableCell align="right">EMAIL</TableCell>
+            <TableCell align="right">BRANCH</TableCell>
+            <TableCell align="right">SEM</TableCell>
+            <TableCell align="right">COMPLAINT</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
