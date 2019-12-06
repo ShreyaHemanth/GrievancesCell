@@ -7,6 +7,20 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 dotenv.config();
 
+var mongoose = require("mongoose");
+mongoose
+  .connect("mongodb://localhost/grievances", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(
+    () => {
+      console.log("connected");
+    },
+    err => {
+      console.log("err", err);
+    }
+  );
 var usersRouter = require("./routes/users");
 
 var complaintsRouter = require("./routes/complaints");

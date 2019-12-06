@@ -19,9 +19,9 @@ function useForm(initialState, onSubmit) {
     setForm(initialState);
   }, [initialState]);
 
-  // const setInForm = useCallback((name, value) => {
-  //   setForm(form => _.setIn(form, name, value));
-  // }, []);
+  const setInForm = useCallback((name, value) => {
+    setForm(form => _.setIn(form, name, value));
+  }, []);
 
   const handleSubmit = useCallback(
     event => {
@@ -40,8 +40,8 @@ function useForm(initialState, onSubmit) {
     handleChange,
     handleSubmit,
     resetForm,
-    setForm
-    // setInForm
+    setForm,
+    setInForm
   };
 }
 

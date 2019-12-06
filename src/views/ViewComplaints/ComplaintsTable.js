@@ -7,6 +7,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import axio from "axios";
+import _ from "@lodash";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -17,51 +18,48 @@ const useStyles = makeStyles({
   }
 });
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
-];
 
 export default function SimpleTable() {
   const classes = useStyles();
   const [data, setData] = useState(null);
+  // axio.get("http://localhost:8000/complaints").then(res => {
+  //   console.log(res.data);
+  //   setData(res.data);
+  // });
   useEffect(() => {
     axio.get("http://localhost:8000/complaints").then(res => {
       console.log(res.data);
-      setData(res.data)});
-  });
+      setData(res.data);
+    });
+  }, []);
   return (
     <Paper className={classes.root}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>NAME</TableCell>
-            <TableCell align="right">USN</TableCell>
-            <TableCell align="right">GENDER</TableCell>
-            <TableCell align="right">PHNO.</TableCell>
-            <TableCell align="right">EMAIL</TableCell>
-            <TableCell align="right">BRANCH</TableCell>
-            <TableCell align="right">SEM</TableCell>
-            <TableCell align="right">COMPLAINT</TableCell>
+            <TableCell align="left">USN</TableCell>
+            <TableCell align="left">GENDER</TableCell>
+            <TableCell align="left">PHNO.</TableCell>
+            <TableCell align="left">EMAIL</TableCell>
+            <TableCell align="left">BRANCH</TableCell>
+            <TableCell align="left">SEM</TableCell>
+            <TableCell>COMPLAINT</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
+          {_.map(data, comp => (
+            <TableRow key={comp._id}>
+              <TableCell component="th" scope="comp">
+                {comp.name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="left">{comp.usn}</TableCell>
+              <TableCell align="left">{comp.gender}</TableCell>
+              <TableCell align="left">{comp.phoneno}</TableCell>
+              <TableCell align="left">{comp.email}</TableCell>
+              <TableCell align="left">{comp.branch}</TableCell>
+              <TableCell align="left">{comp.sem}</TableCell>
+              <TableCell>{comp.details}</TableCell>
             </TableRow>
           ))}
         </TableBody>
