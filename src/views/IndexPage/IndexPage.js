@@ -9,15 +9,16 @@ import Parallax from "components/Parallax/Parallax.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
+import { auth } from "../../services";
 
 import styles from "assets/jss/material-kit-react/views/components.js";
 
 const useStyles = makeStyles(styles);
-function isValidUser() {
-  const username = localStorage.getItem("username");
-  return !!username;
-  // let history = useHistory();
-}
+// function isValidUser() {
+//   const username = localStorage.getItem("username");
+//   return !!username;
+//   // let history = useHistory();
+// }
 export default function IndexPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
@@ -51,7 +52,7 @@ export default function IndexPage(props) {
           </GridContainer>
         </div>
       </Parallax>
-      {!isValidUser() && (
+      {!auth() && (
         <div className={classNames(classes.main, classes.mainRaised)}>
           <GridItem md={12} className={classes.textCenter}>
             <Link to={"/login-page"} className={classes.link}>

@@ -20,21 +20,21 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js";
-
+import { auth, logout } from "../../services";
 const useStyles = makeStyles(styles);
 
-function isValidUser() {
-  const username = localStorage.getItem("username");
-  return !!username;
-  // let history = useHistory();
-}
+// function isValidUser() {
+//   const username = localStorage.getItem("username");
+//   return !!username;
+//   // let history = useHistory();
+// }
 export default function HeaderLinks(props) {
   const classes = useStyles();
-  function logout() {
-    // history = useHistory();
-    localStorage.removeItem("username");
-    // history.push("/login");
-  }
+  // function logout() {
+  //   // history = useHistory();
+  //   localStorage.removeItem("username");
+  //   // history.push("/login");
+  // }
   return (
     <List className={classes.list}>
       {/*  <ListItem className={classes.listItem}>
@@ -73,14 +73,11 @@ export default function HeaderLinks(props) {
         <Link to="/complaints-page" className={classes.navLink}>
           Complaints
         </Link>
-        {isValidUser() && (
+        {auth() && (
           <Link to="/view-complaints" className={classes.navLink}>
             View Complaints
           </Link>
         )}
-        <Link to="/view-complaints" className={classes.navLink}>
-          View Complaints
-        </Link>
         <Link to="/policy" className={classes.navLink}>
           Policy
         </Link>
@@ -90,15 +87,21 @@ export default function HeaderLinks(props) {
         <Link to="/about" className={classes.navLink}>
           About
         </Link>
-        {isValidUser() ? (
-          <Link to="/">
-            <Button size="lg" simple onClick={logout()}>
-              logout
+        {!auth() ? (
+          <Link to="/login-page">
+            <Button size="lg" simple>
+              Login
             </Button>
           </Link>
         ) : (
           <Link to="/login-page">
-            <Button size="lg" simple>
+            <Button
+              size="lg"
+              simple
+              onClick={() => {
+                logout();
+              }}
+            >
               Logout
             </Button>
           </Link>

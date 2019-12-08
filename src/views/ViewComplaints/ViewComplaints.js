@@ -24,20 +24,21 @@ import {
 } from "react-router-dom";
 import styles from "assets/jss/material-kit-react/views/components.js";
 import ComplaintsTable from "./ComplaintsTable";
+import { auth } from "../../services";
 
 const useStyles = makeStyles(styles);
-function isValidUser() {
-  const username = localStorage.getItem("username");
-  return !!username;
-  // let history = useHistory();
-}
+// function isValidUser() {
+//   const username = localStorage.getItem("username");
+//   return !!username;
+//   // let history = useHistory();
+// }
 export default function Components(props) {
   const classes = useStyles();
   const { ...rest } = props;
 
   return (
     <div>
-      {/* {!isValidUser && <Redirect to="/" />} */}
+      {!auth() && <Redirect to="/" />}
       <Header
         brand="Material Kit React"
         rightLinks={<HeaderLinks />}

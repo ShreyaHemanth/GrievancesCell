@@ -18,7 +18,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardFooter from "components/Card/CardFooter.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import axio from "axios";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
@@ -27,6 +27,7 @@ import image from "assets/img/bg7.jpg";
 const useStyles = makeStyles(styles);
 
 export default function LoginPage(props) {
+  const { history } = useHistory();
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {
     setCardAnimation("");
@@ -55,8 +56,9 @@ export default function LoginPage(props) {
         name: "",
         password: ""
       });
+      // history.push("/");
       setRedirect(<Redirect to="/" />);
-      props.history.push("/");
+      // props.history.push("/");
       localStorage.setItem("username", res.data.name);
     });
   };
@@ -136,7 +138,7 @@ export default function LoginPage(props) {
                       size="lg"
                       onClick={handleSubmit}
                     >
-                      Get started
+                      Login
                     </Button>
                   </CardFooter>
                 </form>
